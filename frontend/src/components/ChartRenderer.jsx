@@ -24,7 +24,7 @@ function ChartRenderer({ data }) {
         <XAxis dataKey={xKey} />
         <YAxis />
         <Tooltip />
-        <Bar dataKey={yKey} />
+        <Bar dataKey={yKey} fill="#4f46e5" />
       </BarChart>
     </ResponsiveContainer>
   );

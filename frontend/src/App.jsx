@@ -7,9 +7,13 @@ function App() {
 
   const [result, setResult] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
   const handleQuery = async (prompt) => {
 
     try {
+
+      setLoading(true);
 
       const response = await sendQuery(prompt);
 
@@ -20,6 +24,10 @@ function App() {
       console.error(error);
       alert("Error generating dashboard");
 
+    } finally {
+
+      setLoading(false);
+
     }
   };
 
@@ -29,6 +37,8 @@ function App() {
       <h1>Conversational BI Dashboard</h1>
 
       <PromptInput onSubmit={handleQuery} />
+
+      {loading && <p>Generating dashboard...</p>}
 
       <Dashboard result={result} />
 

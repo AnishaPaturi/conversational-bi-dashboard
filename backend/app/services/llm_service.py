@@ -1,13 +1,10 @@
 import os
-from openai import OpenAI
+import requests
 from dotenv import load_dotenv
 
 load_dotenv()
 
-client = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_API_KEY")
-)
+API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 def generate_sql(user_prompt):
 
@@ -39,18 +36,38 @@ Convert the following request into a valid SQLite SQL query.
 Schema:
 {schema}
 
-Return ONLY SQL.
+Rules:
+- Return ONLY SQL
+- Use aliases for aggregated columns
+Example: SUM(Revenue) AS Total_Revenue
 
 User request:
 {user_prompt}
 """
 
-    response = client.chat.completions.create(
-        model="meta-llama/llama-3-8b-instruct",
-        messages=[{"role": "user", "content": prompt}]
+    response = requests.post(
+        "https://openrouter.ai/api/v1/chat/completions",
+        headers={
+            "Authorization": f"Bearer {API_KEY}",
+            "HTTP-Referer": "http://localhost:5173",
+            "X-Title": "Conversational BI Dashboard"
+        },
+        json={
+            "model": "deepseek/deepseek-chat",
+            "messages": [
+                {"role": "user", "content": prompt}
+            ]
+        }
     )
 
-    sql = response.choices[0].message.content.strip()
+    result = response.json()
+
+    print("OPENROUTER RESPONSE:", result)
+
+    if "choices" not in result:
+        raise Exception(f"OpenRouter API error: {result}")
+
+    sql = result["choices"][0]["message"]["content"].strip()
 
     sql = sql.replace("```sql", "").replace("```", "").strip()
 
