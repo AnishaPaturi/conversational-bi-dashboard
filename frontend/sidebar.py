@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import json
 import requests
-from streamlit_mic_recorder import mic_recorder
+# from streamlit_mic_recorder import mic_recorder
 
 UPLOAD_API = "http://127.0.0.1:8000/upload"
 
@@ -23,37 +23,37 @@ def render_sidebar():
 
     st.sidebar.divider()
 
-    # -------- VOICE INPUT --------
-    st.sidebar.subheader("🎤 Voice Query")
+    # # -------- VOICE INPUT --------
+    # st.sidebar.subheader("🎤 Voice Query")
 
-    audio = mic_recorder(
-        start_prompt="Start Recording",
-        stop_prompt="Stop Recording",
-        key="voice_recorder"
-    )
+    # audio = mic_recorder(
+    #     start_prompt="Start Recording",
+    #     stop_prompt="Stop Recording",
+    #     key="voice_recorder"
+    # )
 
-    if audio:
-        st.sidebar.success("Voice recorded!")
+    # if audio:
+    #     st.sidebar.success("Voice recorded!")
 
-        try:
-            response = requests.post(
-                "http://127.0.0.1:8000/voice",
-                files={"file": audio["bytes"]}
-            )
+        # try:
+        #     response = requests.post(
+        #         "http://127.0.0.1:8000/voice",
+        #         files={"file": audio["bytes"]}
+        #     )
 
-            result = response.json()
-            transcript = result.get("text", "")
+        #     result = response.json()
+        #     transcript = result.get("text", "")
 
-            if transcript:
-                st.session_state.voice_query = transcript
-                st.sidebar.write("You said:")
-                st.sidebar.write(transcript)
+        #     if transcript:
+        #         st.session_state.voice_query = transcript
+        #         st.sidebar.write("You said:")
+        #         st.sidebar.write(transcript)
 
-        except Exception as e:
-            st.sidebar.error("Voice processing failed")
-            st.sidebar.write(e)
+        # except Exception as e:
+        #     st.sidebar.error("Voice processing failed")
+        #     st.sidebar.write(e)
 
-    st.sidebar.divider()
+    # st.sidebar.divider()
 
     # -------- CSV UPLOAD --------
     st.sidebar.subheader("📁 Upload Dataset")
@@ -105,3 +105,23 @@ def render_sidebar():
                 st.session_state.messages = json.load(f)
 
             st.rerun()
+
+    st.sidebar.divider()
+
+    # -------- EXAMPLE QUERIES --------
+    st.sidebar.subheader("💡 Example Queries")
+
+    st.sidebar.markdown("""
+    • Show revenue by region  
+    • Show monthly revenue trend  
+    • Show top product categories  
+    """)
+
+    st.sidebar.divider()
+
+    # -------- LOGOUT --------
+    if st.sidebar.button("Logout"):
+        st.session_state.user = None
+        st.session_state.page = "landing"
+        st.session_state.messages = []
+        st.rerun()
