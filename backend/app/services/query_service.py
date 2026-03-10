@@ -4,9 +4,16 @@ from app.database.connection import get_db_connection
 from app.services.llm_service import generate_sql
 
 
-def run_natural_language_query(user_prompt):
+def run_natural_language_query(user_prompt, context=None):
 
-    llm_result = generate_sql(user_prompt)
+    # Combine previous query context if available
+    if context:
+        combined_prompt = context + "\nUser follow-up: " + user_prompt
+    else:
+        combined_prompt = user_prompt
+
+    # Generate SQL using LLM
+    llm_result = generate_sql(combined_prompt)
 
     sql_query = llm_result["sql"]
     chart_type = llm_result["chart"]

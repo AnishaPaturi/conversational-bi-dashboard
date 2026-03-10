@@ -9,6 +9,8 @@ function App() {
 
   const [result, setResult] = useState(null);
 
+  const [history, setHistory] = useState([]);
+
   const handleQuery = async (prompt) => {
 
     try {
@@ -16,6 +18,8 @@ function App() {
       const response = await sendQuery(prompt);
 
       console.log("API RESPONSE:", response);
+
+      setHistory([...history, prompt]);
 
       setResult(response);
 
