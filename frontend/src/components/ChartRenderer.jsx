@@ -1,32 +1,43 @@
 import {
   BarChart,
   Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
-  ResponsiveContainer
+  CartesianGrid
 } from "recharts";
 
-function ChartRenderer({ data }) {
+function ChartRenderer({ result }) {
 
-  if (!data || data.length === 0) return <p>No data</p>;
+  if (!result || !result.data) return null;
 
-  const keys = Object.keys(data[0]);
+  const data = result.data;
+  const x = result.x;
+  const y = result.y;
+  const chart = result.chart;
 
-  const xKey = keys[0];
-  const yKey = keys[1];
-
-  return (
-    <ResponsiveContainer width="80%" height={400}>
-      <BarChart data={data}>
+  if (chart === "line") {
+    return (
+      <LineChart width={900} height={400} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey={xKey} />
+        <XAxis dataKey={x} />
         <YAxis />
         <Tooltip />
-        <Bar dataKey={yKey} fill="#4f46e5" />
-      </BarChart>
-    </ResponsiveContainer>
+        <Line type="monotone" dataKey={y} stroke="#6366f1" strokeWidth={3} />
+      </LineChart>
+    );
+  }
+
+  return (
+    <BarChart width={900} height={400} data={data}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey={x} />
+      <YAxis />
+      <Tooltip />
+      <Bar dataKey={y} fill="#6366f1" />
+    </BarChart>
   );
 }
 

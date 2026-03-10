@@ -11,7 +11,8 @@ function Dashboard({ result }) {
       <pre>{result.sql}</pre>
 
       <h3>Chart</h3>
-      <ChartRenderer data={result.data} />
+
+      <ChartRenderer result={result} />
 
     </div>
   );
