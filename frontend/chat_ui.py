@@ -104,7 +104,6 @@ def render_chat():
     if "current_chat_file" not in st.session_state:
         st.session_state.current_chat_file = None
 
-    # ---------- TOP BAR ----------
     left, right = st.columns([8, 2])
 
     with left:
@@ -153,9 +152,25 @@ def render_chat():
             const textarea = window.parent.document.querySelector("textarea");
 
             if(textarea){
+
                 textarea.value = text;
+
                 textarea.dispatchEvent(new Event("input",{bubbles:true}));
+
+                const enterEvent = new KeyboardEvent("keydown", {
+                    bubbles: true,
+                    cancelable: true,
+                    key: "Enter",
+                    code: "Enter"
+                });
+
+                textarea.dispatchEvent(enterEvent);
             }
+        };
+
+        recognition.onend = function(){
+            recording = false;
+            btn.innerText = "🎤";
         };
 
         </script>
@@ -163,7 +178,6 @@ def render_chat():
         height=40
         )
 
-    # ---------- HEADER ----------
     st.title("🤖 Conversational BI Dashboard")
 
     st.markdown("""
@@ -206,7 +220,6 @@ Example queries:
                 else:
                     st.warning("No data returned from this query.")
 
-    # ---------- USER INPUT ----------
     prompt = st.chat_input("Ask a question about your data")
 
     if prompt:
@@ -221,7 +234,6 @@ Example queries:
 
         save_chat()
 
-        # ---------- AI SPEAKS DURING PROCESS ----------
         loading_phrases = [
             "Analyzing your data.",
             "Let me check the dataset.",
@@ -230,7 +242,6 @@ Example queries:
 
         auto_speak(random.choice(loading_phrases))
 
-        # ---------- CALL BACKEND ----------
         with st.spinner("Generating dashboard..."):
 
             try:
@@ -251,18 +262,49 @@ Example queries:
 
                 df = pd.DataFrame(data)
 
-            except Exception as e:
-                st.error(f"Backend error: {e}")
+                if df.empty:
+
+                    message = "I couldn't find data for that query. Please try a different question."
+
+                    st.warning(message)
+
+                    auto_speak(message)
+
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": message
+                    })
+
+                    save_chat()
+                    return
+
+            except Exception:
+
+                message = "I couldn't understand that query. Try asking about revenue, region, product, or month."
+
+                st.error(message)
+
+                auto_speak(message)
+
                 return
 
-        # ---------- ASSISTANT RESPONSE ----------
         with st.chat_message("assistant"):
 
-            with st.expander("Generated SQL"):
+            with st.expander("View generated SQL"):
                 st.code(sql)
 
             st.write("Query Result")
             st.dataframe(df)
+
+            if x not in df.columns or y not in df.columns:
+
+                message = "The requested data fields do not exist in this dataset."
+
+                st.error(message)
+
+                auto_speak(message)
+
+                return
 
             if x in df.columns and y in df.columns:
 
@@ -272,7 +314,6 @@ Example queries:
                 elif chart == "line":
                     st.line_chart(df.set_index(x)[y])
 
-            # ---------- INSIGHT GENERATION ----------
             insights = generate_insight(df, x, y)
 
             st.subheader("Key Insights")
