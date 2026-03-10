@@ -101,3 +101,19 @@ User request:
         raise Exception(f"Invalid JSON from LLM: {content}")
 
     return parsed
+
+import sqlite3
+
+def get_schema():
+
+    conn = sqlite3.connect("marketing.db")
+
+    cursor = conn.cursor()
+
+    cursor.execute("PRAGMA table_info(campaigns)")
+
+    columns = cursor.fetchall()
+
+    conn.close()
+
+    return [col[1] for col in columns]

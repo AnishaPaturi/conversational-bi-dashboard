@@ -2,6 +2,8 @@ import { useState } from "react";
 import PromptInput from "./components/PromptInput";
 import Dashboard from "./components/Dashboard";
 import { sendQuery } from "./services/api";
+import UploadCSV from "./components/UploadCSV";
+
 
 function App() {
 
@@ -29,6 +31,8 @@ function App() {
     <div style={{ padding: "40px" }}>
 
       <h1>Conversational BI Dashboard</h1>
+
+      <UploadCSV />
 
       <PromptInput onSubmit={handleQuery} />
 
