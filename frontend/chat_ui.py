@@ -258,6 +258,34 @@ def render_chat():
                         elif chart == "line":
                             st.line_chart(df.set_index(x)[y])
 
+                        elif chart == "pie":
+
+                            pie_data = df.set_index(x)[y]
+
+                            fig = pie_data.plot.pie(
+                                autopct="%1.1f%%",
+                                ylabel="",
+                                figsize=(5,5)
+                            ).figure
+
+                            st.pyplot(fig)
+
+                        elif chart == "hbar":
+
+                            st.write("Horizontal Bar Chart")
+
+                            st.bar_chart(df.set_index(x)[y].sort_values())
+
+                        elif chart == "area":
+
+                            st.area_chart(df.set_index(x)[y])
+
+                        elif chart == "scatter":
+
+                            scatter_df = df[[x, y]]
+
+                            st.scatter_chart(scatter_df)
+
                 else:
                     st.warning("No data returned from this query.")
 
@@ -354,6 +382,34 @@ def render_chat():
 
                 elif chart == "line":
                     st.line_chart(df.set_index(x)[y])
+
+                elif chart == "pie":
+
+                    pie_data = df.set_index(x)[y]
+
+                    fig = pie_data.plot.pie(
+                        autopct="%1.1f%%",
+                        ylabel="",
+                        figsize=(5,5)
+                    ).figure
+
+                    st.pyplot(fig)
+
+                elif chart == "hbar":
+
+                    st.write("Horizontal Bar Chart")
+
+                    st.bar_chart(df.set_index(x)[y].sort_values())
+
+                elif chart == "area":
+
+                    st.area_chart(df.set_index(x)[y])
+
+                elif chart == "scatter":
+
+                    scatter_df = df[[x, y]]
+
+                    st.scatter_chart(scatter_df)
 
             insights = generate_insight(df, x, y)
 
