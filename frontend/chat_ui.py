@@ -254,7 +254,11 @@ def render_chat():
 
                 if text:
                     st.info(f"🎤 You said: {text}")
+
                     run_query(text, from_voice=True)
+
+                    # Speak confirmation
+                    auto_speak("Processing your request")
 
                 os.remove(temp_audio_path)
 
