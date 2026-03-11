@@ -1,0 +1,39 @@
+[
+  {
+    "role": "user",
+    "content": "revenue"
+  },
+  {
+    "role": "user",
+    "content": "show revenue by language"
+  },
+  {
+    "role": "assistant",
+    "content": "Hindi has the highest Total_Revenue with a value of 7242728156.0.",
+    "data": [
+      {
+        "Language": null,
+        "Total_Revenue": null
+      },
+      {
+        "Language": "Bengali",
+        "Total_Revenue": 7130695282.0
+      },
+      {
+        "Language": "English",
+        "Total_Revenue": 7131128736.0
+      },
+      {
+        "Language": "Hindi",
+        "Total_Revenue": 7242728156.0
+      },
+      {
+        "Language": "Tamil",
+        "Total_Revenue": 7151812108.0
+      }
+    ],
+    "chart": "bar",
+    "x": "Language",
+    "y": "Total_Revenue"
+  }
+]

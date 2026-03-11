@@ -20,8 +20,8 @@ st.markdown("""
 
 /* Entire app text */
 .stApp {
-    color: black !important;
-    background-color: white;
+    color: white !important;
+    background-color: #0E1117;
 }
 
 /* Markdown text */

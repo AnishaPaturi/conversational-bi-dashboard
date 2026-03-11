@@ -577,94 +577,42 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* Default app background */
+/* MAIN APP BACKGROUND */
 [data-testid="stAppViewContainer"]{
-    background-color:white;
+    background-color:#0E1117;
 }
 
+/* MAIN CONTENT AREA */
 [data-testid="stAppViewBlockContainer"]{
-    background-color:white;
-    color:black;
-}
-
-/* -------- SIDEBAR STYLING -------- */
-
-section[data-testid="stSidebar"]{
-    background-color:#1B263B !important;
-}
-
-section[data-testid="stSidebar"] h1,
-section[data-testid="stSidebar"] h2,
-section[data-testid="stSidebar"] h3,
-section[data-testid="stSidebar"] h4,
-section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] span,
-section[data-testid="stSidebar"] div{
-    color:#F8FAFC !important;
-}
-
-section[data-testid="stSidebar"] hr{
-    border-color:#3A506B !important;
-}
-
-section[data-testid="stSidebar"] .stButton>button{
-    background-color:#FBBF24 !important;
-    color:#111827 !important;
-    border-radius:8px;
-    font-weight:600;
-}
-
-section[data-testid="stSidebar"] .stButton>button:hover{
-    background-color:#F59E0B !important;
+    background-color:#0E1117;
+    color:white;
 }
 
 /* Header */
 header[data-testid="stHeader"]{
-    background-color:white;
+    background-color:#0E1117;
+}
+
+/* Chat input bar */
+[data-testid="stChatInput"]{
+    background-color:#0E1117 !important;
+    color:white !important;
 }
 
 /* Inputs */
-[data-baseweb="input"]{
-    background-color:white !important;
-}
-
 [data-baseweb="input"] input{
-    background-color:white !important;
-    color:black !important;
-}
-
-[data-baseweb="input"] input::placeholder{
-    color:#777 !important;
-}
-
-/* Chat input */
-[data-testid="stChatInput"]{
-    background-color:white !important;
-    color:black !important;
+    background-color:#1E1E1E !important;
+    color:white !important;
 }
 
 /* Buttons */
 .stButton>button{
-    background-color:#4CAF50;
+    background-color:#2563EB;
     color:white;
-    border-radius:8px;
-}
-
-/* Code blocks */
-pre {
-    background-color:white !important;
-    color:black !important;
-}
-
-code {
-    background-color:white !important;
-    color:black !important;
 }
 
 </style>
 """, unsafe_allow_html=True)
-
-
 # -------- SESSION STATE --------
 if "page" not in st.session_state:
     st.session_state.page = "landing"
