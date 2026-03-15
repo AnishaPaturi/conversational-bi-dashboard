@@ -16,7 +16,7 @@ import whisper
 os.environ["PATH"] += os.pathsep + r"C:\ffmpeg-8.0.1-essentials_build\ffmpeg-8.0.1-essentials_build\bin"
 
 # CHAT_DIR = "saved_chats"
-API_URL = "http://127.0.0.1:8000/query"
+API_URL = "https://viztalk-backend.onrender.com/query"
 
 
 # ---------- LOAD WHISPER ----------
