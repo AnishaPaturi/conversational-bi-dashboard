@@ -5,3 +5,4 @@ streamlit-mic-recorder
 openai-whisper
 ffmpeg-python
 sqlalchemy
+streamlit-cookies-manager
