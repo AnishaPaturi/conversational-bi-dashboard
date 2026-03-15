@@ -4,3 +4,6 @@ requests
 streamlit-mic-recorder
 openai-whisper
 ffmpeg-python
+fastapi
+uvicorn
+sqlalchemy
